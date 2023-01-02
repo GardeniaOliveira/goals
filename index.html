@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goals</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://kit.fontawesome.com/c474716ce4.js" crossorigin="anonymous"></script>
+    <script defer src="./js/main.js"></script>
+</head>
+
+<body>
+    <h1>Goals</h1>
+    <div class="container">
+        <div class="create-goal">
+
+            <div class="div-name">
+                <label for="text">Create your goal:</label>
+                <input type="text" id="input-name-goal" class="format-boxes">
+            </div>
+
+            <div class="div-time">
+                <label for="text">Many times?</label>
+                <input type="number" id="input-times-goal" class="format-boxes">
+            </div>
+            <div class="div-start">
+                <label for="text">Start:</label>
+                <input type="date" id="input-date-start" class="format-boxes">
+            </div>
+            <div class="div-end">
+                <label for="text">End:</label>
+                <input type="date" id="input-date-end" class="format-boxes">
+            </div>
+            <button type="submit" id="create-btn">Create</button>
+
+        </div>
+
+        <h2>Your goals</h2>
+        <div class="doing">
+            <div class="box">
+                <div class="container-progress-bar format-boxes">
+                    <div class="progress-bar"></div>
+                    <p class="name-progress-bar ">Estudar js</p>
+                </div>
+                <div class="counter format-boxes">
+                    <p class="counter-start">14</p>
+                    <p> / </p>
+                    <p class="counter-end">200</p>
+                    <input type="checkbox" id="check-input">
+                </div>
+                <div class="buttons">
+                    <button id="undo-btn"><i class="fas fa-undo-alt icon"></i></button>
+                    <button id="edit-btn"><i class="fas fa-pen icon"></i></button>
+                </div>
+            </div>
+
+            <div class="about">
+                <div class="date">
+                    <div>
+                        <p>Last time done: </p>
+                        <p class="last-time-date">01/01/2023</p>
+                    </div>
+                    <div>
+                        <p>Goal finish in:</p>
+                        <p class="date-end">31/12/2023</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
