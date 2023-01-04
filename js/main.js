@@ -9,21 +9,22 @@ const updateGoal = document.querySelector('.update-goal');
 let counter = 0;
 let counterId = 1;
 
-
+const goals = []
 const arrayId = []
-function listGoal() {
+function putOnListItem(name, times, dateStart, dateEnd) {
     const divListGoal = document.createElement('div');
     divListGoal.innerHTML = `
     <div class="box">
+    <input type="text" value="${counterId}" id="goal-input-id" class="hidden"  >
         <div class="container-progress-bar format-boxes">
             <div class="progress-bar"></div>
-            <p class="name-progress-bar">${inputNameGoal.value}</p>
+            <p class="name-progress-bar">${name}</p>
           
         </div>
         <div class="counter format-boxes">
             <p class="counter-start">0</p>
             <p> / </p>
-            <p class="counter-end">${inputTimesGoal.value}</p>
+            <p class="counter-end">${times}</p>
             <input type="checkbox" id="check-input-${counterId}" class="ckeck" >
             
         </div>
@@ -40,25 +41,71 @@ function listGoal() {
                 </div>
                 <div>
                     <p>Goal started in:</p>
-                    <p class="date-start">${inputDateStart.value}</p>
+                    <p class="date-start">${dateStart}</p>
                 </div>
                 <div>
                     <p>Goal finish in:</p>
-                    <p class="date-end">${inputDateEnd.value}</p>
+                    <p class="date-end">${dateEnd}</p>
                 </div>
 
             </div>
         </div>
-        
+
+    
+
+        <div class="edit-goal hidden">
+    
+            <div class="div-name">
+                <label for="text">Your goal:</label>
+                <input type="text" id="edit-name-goal" class="format-boxes"  value="${name}">
+                
+            </div>
+
+            <div class="div-time">
+                <label for="text">Many times?</label>
+                <input type="number" id="edit-times-goal" value="${times}" class="format-boxes">
+                
+            </div>
+            <div class="div-start">
+                <label for="text">Start:</label>
+                <input type="date" id="edit-date-start" class="format-boxes" value="${dateStart}">
+            </div>
+            <div class="div-end">
+                <label for="text">End:</label>
+                <input type="date" id="edit-date-end" class="format-boxes" value="${dateEnd}">
+            </div>
+            <button type="submit" id="update-btn">Update</button>
+
+         </div>
+
     </div>
     `
+    return divListGoal
+}
+function listGoal() {
+
+    const divListGoal = putOnListItem(inputNameGoal.value, inputTimesGoal.value, inputDateStart.value, inputDateEnd.value)
 
     doing.appendChild(divListGoal)
+
+
+    //create object in the array 
+    goals.push({
+
+        id: counterId,
+        name: inputNameGoal.value,
+        times: inputTimesGoal.value,
+        dateStart: inputDateStart.value,
+        dateEnd: inputDateEnd.value,
+
+    })
+
 
     //check what btn is clicked
     document.addEventListener("click", (e) => {
         const targetElement = e.target;
         console.log(targetElement)
+
     })
 
     //increment counter and progress bar
@@ -76,6 +123,7 @@ function listGoal() {
 
     counterId += 1;
 
+    //decrement counter and progress bar
     const btnUndo = document.querySelector('#undo-btn');
     btnUndo.addEventListener('click', () => {
         if (counter > 0) {
@@ -86,74 +134,49 @@ function listGoal() {
 
     })
 
-
+    //edit the goal
+    let boxEditGoal = document.querySelector('.edit-goal');
     const btnEdit = document.querySelector('#edit-btn');
     btnEdit.addEventListener('click', () => {
+        boxEditGoal.classList.remove("hidden");
         editGoal()
     })
 
-
-    function editGoal() {
-        const divEditGoal = document.createElement('div');
-        divEditGoal.innerHTML = `
-        <div class="edit-goal">
-    
-                <div class="div-name">
-                    <label for="text">Your goal:</label>
-                    <input type="text" id="edit-name-goal" class="format-boxes"  value="${inputNameGoal.value}">
-                    
-                </div>
-    
-                <div class="div-time">
-                    <label for="text">Many times?</label>
-                    <input type="number" id="edit-times-goal" value="${inputTimesGoal.value}" class="format-boxes">
-                    
-                </div>
-                <div class="div-start">
-                    <label for="text">Start:</label>
-                    <input type="date" id="edit-date-start" class="format-boxes" value="${inputDateStart.value}">
-                </div>
-                <div class="div-end">
-                    <label for="text">End:</label>
-                    <input type="date" id="edit-date-end" class="format-boxes" value="${inputDateEnd.value}">
-                </div>
-                <button type="submit" id="update-btn">Update</button>
-    
-            </div>
-    `
-
-        updateGoal.appendChild(divEditGoal);
-
-        let listNameGoal = document.querySelector('.name-progress-bar')
-        listNameGoal.innerHTML = inputNameGoal.value;
-
-        let listTimesGoal = document.querySelector('.counter-end')
-        listTimesGoal.innerHTML = inputTimesGoal.value;
+}
 
 
-        let listDateStart = document.querySelector('.date-start')
-        listDateStart.innerHTML = inputDateStart.value;
+function editGoal() {
+    let listNameGoal = document.querySelector('.name-progress-bar')
+    listNameGoal.innerHTML = inputNameGoal.value;
 
-        let listDateEnd = document.querySelector('.date-end')
-        listDateEnd.innerHTML = inputDateEnd.value;
-
-        let boxEditGoal = document.querySelector('.edit-goal');
-        let updateName = document.querySelector('#edit-name-goal');
-        let updateTimes = document.querySelector('#edit-times-goal');
-        let updateDateStart = document.querySelector('#edit-date-start');
-        let updateDateEnd = document.querySelector('#edit-date-end');
-        const btnUpdate = document.getElementById('update-btn');
-        btnUpdate.addEventListener('click', () => {
-            listNameGoal.innerHTML = updateName.value;
-            listTimesGoal.innerHTML = updateTimes.value;
-            listDateStart.innerHTML = updateDateStart.value;
-            listDateEnd.innerHTML = updateDateEnd.value;
-            boxEditGoal.classList.add("hidden");
-
-        })
+    let listTimesGoal = document.querySelector('.counter-end')
+    listTimesGoal.innerHTML = inputTimesGoal.value;
 
 
-    }
+    let listDateStart = document.querySelector('.date-start')
+    listDateStart.innerHTML = inputDateStart.value;
+
+    let listDateEnd = document.querySelector('.date-end')
+    listDateEnd.innerHTML = inputDateEnd.value;
+
+
+    let boxEditGoal = document.querySelector('.edit-goal');
+    let inputId = document.querySelector('#goal-input-id');
+    console.log(inputId.value);
+
+    let updateName = document.querySelector('#edit-name-goal');
+    let updateTimes = document.querySelector('#edit-times-goal');
+    let updateDateStart = document.querySelector('#edit-date-start');
+    let updateDateEnd = document.querySelector('#edit-date-end');
+    const btnUpdate = document.getElementById('update-btn');
+    btnUpdate.addEventListener('click', () => {
+        listNameGoal.innerHTML = updateName.value;
+        listTimesGoal.innerHTML = updateTimes.value;
+        listDateStart.innerHTML = updateDateStart.value;
+        listDateEnd.innerHTML = updateDateEnd.value;
+        boxEditGoal.classList.add("hidden");
+
+    })
 
 
 }
@@ -199,80 +222,4 @@ function cleanCreateGoal() {
 
 
 
-// btnCreate.addEventListener('click', () => {
-//     const goals = document.createElement('div');
-//     goals.innerText = inputNameGoal.value;
-//     goals.classList.add('format-boxes')
-//     box.appendChild(goals);
-
-//     const counterStart = document.createElement('p');
-//     counterStart.innerText = 0;
-//     counterStart.classList.add('format-boxes')
-//     // box.appendChild(counterStart);
-
-//     const times = document.createElement('p');
-//     times.innerText = inputTimesGoal.value;
-//     times.classList.add('format-boxes')
-//     // box.appendChild(times);
-
-//     const divBox = document.createElement('div');
-//     divBox.classList.add('flex')
-//     divBox.appendChild(counterStart);
-//     divBox.appendChild(times);
-//     box.appendChild(divBox);
-
-//     const checkInput = document.createElement("INPUT");
-//     checkInput.setAttribute("type", "checkbox");
-//     checkInput.id = "check-input";
-//     checkInput.classList.add('format-boxes')
-//     divBox.appendChild(checkInput);
-
-//     checkInput.addEventListener('change', function () {
-//         if (this.checked) {
-//             console.log("Check")
-//             counter = counter + 1;
-//             counterStart.innerText = counter;
-//             goals.style.width = (counter / inputTimesGoal.value) * 100 + "%";
-//         }
-
-//     })
-
-// })
-
-// btnUndo.addEventListener('click', () => {
-//     counter = counter - 1;
-// counterStart.innerText = counter;
-//     progressBar.style.width = (counter / inputTimesGoal.value) * 100 + "%";
-//     lastTimeDate.innerText = new Date();
-// })
-
-// btnEdit.addEventListener('click', () => {
-//     // updateGoal.classList.remove("hidden");
-//     updateGoal.innerHTML = `
-
-//     <div class="div-name">
-//         <label for="text"> Your goal:</label>
-//         <input type="text" id="input-name-goal" class="format-boxes">
-//     </div>
-
-//     <div class="div-time">
-//         <label for="text">Many times?</label>
-//         <input type="number" id="input-times-goal" class="format-boxes">
-//     </div>
-//     <div class="div-start">
-//         <label for="text">Start:</label>
-//         <input type="date" id="input-date-start" class="format-boxes">
-//     </div>
-//     <div class="div-end">
-//         <label for="text">End:</label>
-//         <input type="date" id="input-date-end" class="format-boxes">
-//     </div>
-//     <button type="submit" id="uptade-btn">Update</button>
-
-// `
-//     // nameGoal.value = inputNameGoal.value;
-//     // counterEnd.innerHTML = inputTimesGoal.value;
-//     // dateEnd.innerHTML = inputDateEnd.value;
-//     // dateStart.innerHTML = inputDateStart.value;
-// })
 
