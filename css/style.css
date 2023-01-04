@@ -24,10 +24,12 @@ h1 {
   padding: 20px;
   margin-top: 20px;
 }
-.create-goal div {
+.create-goal div,
+.edit-goal div {
   display: inline-block;
 }
-.create-goal input {
+.create-goal input,
+.edit-goal input {
   width: 100%;
 }
 .format-boxes {
@@ -52,7 +54,8 @@ h1 {
 .div-end {
   width: 10%;
 }
-.create-goal button {
+.create-goal button,
+.edit-goal button {
   width: 10%;
   height: 50px;
   border-radius: 5px;
