@@ -11,6 +11,8 @@ let counterId = 1;
 
 const goals = []
 const arrayId = []
+
+//structure 
 function putOnListItem(name, times, dateStart, dateEnd) {
     const divListGoal = document.createElement('div');
     divListGoal.innerHTML = `
@@ -28,9 +30,10 @@ function putOnListItem(name, times, dateStart, dateEnd) {
             <input type="checkbox" id="check-input-${counterId}" class="ckeck" >
             
         </div>
-        <div class="buttons">
+        <div class="buttons-icons">
             <button id="undo-btn" class="undo"><i class="fas fa-undo-alt icon"></i></button>
             <button id="edit-btn" class="edit"><i class="fas fa-pen icon"></i></button>
+            <button id="delete-btn" class="delete"><i class="fas fa-trash"></i></button>
         </div>
 
         <div class="about">
@@ -80,16 +83,17 @@ function putOnListItem(name, times, dateStart, dateEnd) {
 
     </div>
     `
+
     return divListGoal
 }
+//list to be shown in the screen
 function listGoal() {
 
     const divListGoal = putOnListItem(inputNameGoal.value, inputTimesGoal.value, inputDateStart.value, inputDateEnd.value)
-
     doing.appendChild(divListGoal)
 
 
-    //create object in the array 
+    //store id, name, times and dates inside the array;
     goals.push({
 
         id: counterId,
@@ -99,14 +103,32 @@ function listGoal() {
         dateEnd: inputDateEnd.value,
 
     })
+    //Find id
+    const goalsId = goals.find((goal) => {
+        return goal.id
+    })
+    function splitGoalsInArray() {
+        divListGoal.innerHTML = null; //para limpar os campos preenchidos anteriormente
+        goals.forEach(function (goal) {
+            divListGoal.innerHTML = goal; //escreve na caixinha os dados da goal
+            doing.appendChild(divListGoal); //mostra a caixinha na tela
+        })
+    }
+    // splitGoalsInArray()
+    console.log(goals[0].id)
+    console.log(goalsId)
+
+
+
+
 
 
     //check what btn is clicked
-    document.addEventListener("click", (e) => {
-        const targetElement = e.target;
-        console.log(targetElement)
+    // document.addEventListener("click", (e) => {
+    //     const targetElement = e.target;
+    //     console.log(targetElement)
 
-    })
+    // })
 
     //increment counter and progress bar
     const progressBar = document.querySelector('.progress-bar');
@@ -198,18 +220,18 @@ btnCreate.addEventListener('click', () => {
 
 
 
-function cleanCreateGoal() {
-    console.log('passou no input')
-    inputNameGoal.innerHTML = "";
-    inputTimesGoal.innerHTML = "";
-    inputDateStart.innerHTML = "";
-    inputDateEnd.innerHTML = "";
+// function cleanCreateGoal() {
+//     console.log('passou no input')
+//     inputNameGoal.innerHTML = "";
+//     inputTimesGoal.innerHTML = "";
+//     inputDateStart.innerHTML = "";
+//     inputDateEnd.innerHTML = "";
 
-    // inputNameGoal.value = "";
-    // inputTimesGoal.value = "";
-    // inputDateStart.value = "";
-    // inputDateEnd.value = "";
-}
+//     // inputNameGoal.value = "";
+//     // inputTimesGoal.value = "";
+//     // inputDateStart.value = "";
+//     // inputDateEnd.value = "";
+// }
 
 
 
