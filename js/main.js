@@ -12,8 +12,18 @@ let counterId = 1;
 const goals = []
 const arrayId = []
 
-//structure 
-function putOnListItem(name, times, dateStart, dateEnd) {
+//put the goal information into the array
+function renderGoals() {
+    doing.innerHTML = null; //clean the list previously filled
+    goals.forEach(function (goal) { //for each goal we have a list of information in the array 
+        const listFromArray = structure(goal.name, goal.times, goal.dateStart, goal.dateEnd)
+        doing.appendChild(listFromArray); //show the list on the screen
+
+    })
+}
+
+// html structure showed in the screen
+function structure(name, times, dateStart, dateEnd) {
     const divListGoal = document.createElement('div');
     divListGoal.innerHTML = `
     <div class="box">
@@ -56,7 +66,7 @@ function putOnListItem(name, times, dateStart, dateEnd) {
 
     
 
-        <div class="edit-goal hidden">
+        <div class="edit-goal hidden" id="edit-goal-${counterId}">
     
             <div class="div-name">
                 <label for="text">Your goal:</label>
@@ -86,88 +96,81 @@ function putOnListItem(name, times, dateStart, dateEnd) {
 
     return divListGoal
 }
-//list to be shown in the screen
-function listGoal() {
 
-    const divListGoal = putOnListItem(inputNameGoal.value, inputTimesGoal.value, inputDateStart.value, inputDateEnd.value)
-    doing.appendChild(divListGoal)
-
-
+//update the array after another goal
+function updateArray() {
     //store id, name, times and dates inside the array;
     goals.push({
-
         id: counterId,
         name: inputNameGoal.value,
         times: inputTimesGoal.value,
         dateStart: inputDateStart.value,
         dateEnd: inputDateEnd.value,
-
     })
-    //Find id
-    const goalsId = goals.find((goal) => {
-        return goal.id
-    })
-    function splitGoalsInArray() {
-        divListGoal.innerHTML = null; //para limpar os campos preenchidos anteriormente
-        goals.forEach(function (goal) {
-            divListGoal.innerHTML = goal; //escreve na caixinha os dados da goal
-            doing.appendChild(divListGoal); //mostra a caixinha na tela
-        })
-    }
-    // splitGoalsInArray()
-    console.log(goals[0].id)
-    console.log(goalsId)
+    renderGoals()   //update the array;
+}
 
-
-
-
-
-
-    //check what btn is clicked
-    // document.addEventListener("click", (e) => {
-    //     const targetElement = e.target;
-    //     console.log(targetElement)
-
-    // })
+function listGoal() {
+    updateArray()
 
     //increment counter and progress bar
-    const progressBar = document.querySelector('.progress-bar');
-    const checkInput = document.getElementById(`check-input-${counterId}`);
-    const counterStart = document.querySelector('.counter-start');
-    checkInput.addEventListener('change', function (e) {
-        console.log(e)
-        if (this.checked) {
-            counter = counter + 1;
-            counterStart.innerText = counter;
-            progressBar.style.width = (counter / inputTimesGoal.value) * 100 + "%";
-        }
-    })
-
-    counterId += 1;
+    // const progressBar = document.querySelectorAll('.progress-bar');
+    // const counterStart = document.querySelectorAll('.counter-start');
+    // const checkInputs = document.querySelectorAll(`#check-input-${counterId}`);
+    // checkInputs.forEach((element, index) => {
+    //     element.addEventListener('change', function () {
+    //         if (this.checked) {
+    //             counter = counter + 1;
+    //             counterStart.innerText = counter;
+    //             progressBar.style.width = (counter / inputTimesGoal.value) * 100 + "%";
+    //         }
+    //     })
+    // })
+    counterId = counterId + 1;
 
     //decrement counter and progress bar
-    const btnUndo = document.querySelector('#undo-btn');
-    btnUndo.addEventListener('click', () => {
-        if (counter > 0) {
-            counter = counter - 1;
-            counterStart.innerText = counter;
-            progressBar.style.width = (counter / inputTimesGoal.value) * 100 + "%";
-        }
-
+    const btnsUndo = document.querySelectorAll('#undo-btn');
+    btnsUndo.forEach((element, index) => { //add to all buttons a click event
+        element.addEventListener('click', () => {
+            if (counter > 0) {
+                counter = counter - 1;
+                counterStart.innerText = counter;
+                progressBar.style.width = (counter / inputTimesGoal.times) * 100 + "%";
+            }
+        })
     })
+
 
     //edit the goal
-    let boxEditGoal = document.querySelector('.edit-goal');
-    const btnEdit = document.querySelector('#edit-btn');
-    btnEdit.addEventListener('click', () => {
-        boxEditGoal.classList.remove("hidden");
-        editGoal()
-    })
+    const btnsEdit = document.querySelectorAll('#edit-btn'); //get all edit buttons
+    console.log(btnsEdit)
+    btnsEdit.forEach((element, index) => { //add to all buttons a click event
+        element.addEventListener('click', () => {
+            let boxEditGoal = document.querySelector(`#edit-goal-${index + 1}`);
+            boxEditGoal.classList.remove("hidden");
+            editGoal(index)
+        })
+    });
+
+
+    //delete the goal 
+    // let btnDelete = document.querySelector('#delete-btn');
+    // btnDelete.setAttribute("remove", "");
+    // btnDelete.addEventListener('click', () => {
+    //     function deleteGoal(e) {
+    //         console.log(e.target)
+    //         let position = e.target.getAttribute("remove");
+    //         goals.slice(position, 1)
+    //     }
+
+    //     deleteGoal();
+
+    // })
 
 }
 
 
-function editGoal() {
+function editGoal(index) {
     let listNameGoal = document.querySelector('.name-progress-bar')
     listNameGoal.innerHTML = inputNameGoal.value;
 
@@ -198,6 +201,21 @@ function editGoal() {
         listDateEnd.innerHTML = updateDateEnd.value;
         boxEditGoal.classList.add("hidden");
 
+
+        goals = goals.map(function (goal, position) { //update in the array
+            if (position === index) {
+                return {
+                    id: goal.id,
+                    name: updateName.value,
+                    times: updateTimes.value,
+                    dateStart: updateDateStart.value,
+                    dateEnd: updateDateEnd.value,
+                }
+            }
+            return goal;
+        })
+        renderGoals(); //update the array with new goals after the edit
+
     })
 
 
@@ -211,27 +229,21 @@ function editGoal() {
 
 
 btnCreate.addEventListener('click', () => {
-    // cleanCreateGoal()
     listGoal()
+    // cleanInput()
 
 })
 
 
 
 
-
-// function cleanCreateGoal() {
-//     console.log('passou no input')
-//     inputNameGoal.innerHTML = "";
-//     inputTimesGoal.innerHTML = "";
-//     inputDateStart.innerHTML = "";
-//     inputDateEnd.innerHTML = "";
-
-//     // inputNameGoal.value = "";
-//     // inputTimesGoal.value = "";
-//     // inputDateStart.value = "";
-//     // inputDateEnd.value = "";
-// }
+//clean the inputs 
+function cleanInput() {
+    inputNameGoal.value = "";
+    inputTimesGoal.value = "";
+    inputDateStart.value = "";
+    inputDateEnd.value = "";
+}
 
 
 

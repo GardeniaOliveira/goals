@@ -6,14 +6,15 @@
   box-sizing: border-box;
 }
 :root {
-  --counter-color: #658bc7;
+  --counter-color: #ffa91f;
   --btn-color: #ffa91f;
   --hover-btn-color: #ff910d;
-  --bg-color: #1e293b;
-  --bg-box-buttons-color: #040415;
+  /* --bg-color: #1e293b; */
+  --bg-color: #040415;
+  --bg-box-buttons-color: #686869;
   /* --bg-input-color: #686869; */
   --bg-input-color: #686869;
-  --progress-bar-color: #9cc2ff;
+  --progress-bar-color: #64487a;
 }
 body {
   font-family: "Raleway", sans-serif;
@@ -37,8 +38,12 @@ h2 {
   margin-top: 60px;
 }
 .container {
+  display: flex;
   padding: 20px;
   margin-top: 40px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 }
 .create-goal {
   width: 100%;
@@ -62,6 +67,9 @@ h2 {
   font-size: 16px;
   font-weight: 500;
   margin-top: 5px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: #686869;
 }
 .format-boxes {
   height: 60px;
@@ -115,7 +123,7 @@ h2 {
   align-items: flex-start;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 .container-progress-bar,
 .counter {
@@ -138,6 +146,7 @@ h2 {
   position: absolute;
   top: 18px;
   left: 10px;
+  font-weight: 600;
 }
 .doing button {
   border: none;
@@ -147,6 +156,7 @@ h2 {
   width: 25px;
   height: 25px;
   margin-left: 10px;
+  cursor: pointer;
 }
 .counter {
   width: 100px;
@@ -156,6 +166,7 @@ h2 {
   justify-content: center;
   padding: 10px;
   background: var(--counter-color);
+  color: black;
   border-radius: 0;
 }
 
@@ -167,17 +178,17 @@ h2 {
 }
 .date {
   display: flex;
-  font-size: 12px;
+  gap: 10px;
+  font-size: 13px;
   color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .date div {
   display: flex;
-  padding-top: 10px;
+  padding-top: 14px;
+  gap: 5px;
 }
-#last-time-date,
-#date-end {
-  padding-left: 5px;
-}
+
 .box .buttons-icons {
   width: 20%;
 }
@@ -201,12 +212,14 @@ h2 {
   color: white;
   font-size: 20px;
 }
+#undo-btn :hover,
+#edit-btn :hover,
+#delete-btn:hover {
+  color: var(--hover-btn-color);
+  font-size: 22px;
+}
 .hidden {
   display: none;
-}
-
-.flex {
-  display: flex;
 }
 
 @media (max-width: 820px) {
