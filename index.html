@@ -15,8 +15,6 @@
     <h1>Goals</h1>
     <div class="container">
         <div class="create-goal">
-
-
             <div class="div-name">
                 <label for="text">Create your goal:</label>
                 <input type="text" id="input-name-goal" class="format-inputs">
@@ -41,66 +39,19 @@
 
         <h2>Your goals</h2>
 
-        <div class="box">
-            <!--   <div class="format-boxes">
-                <p>ler um livro</p>
-                <div class="counter">
-                    <p class="counter-start">0</p>
-                    <p> / </p>
-                    <p class="counter-end">7</p>
-                    <input type="checkbox" id="check-input" class="ckeck">
-                </div>
-
-                <div class="buttons-icons">
-                    <button id="undo-btn" class="undo"><i class="fas fa-undo-alt icon"></i></button>
-                    <button id="edit-btn" class="edit"><i class="fas fa-pen icon"></i></button>
-                    <button id="delete-btn" class="delete"><i class="fas fa-trash"></i></button>
-                </div>
-            </div> -->
-
-
-        </div>
-        <div class="date">
-            <!--<div>
-                            <p>Last time done: </p>
-                            <p class="last-time-date">${new Date()}</p>
-                        </div>
-                        <div>
-                            <p>Goal started in:</p>
-                            <p class="date-start">${dateStart}</p>
-                        </div>
-                        <div>
-                            <p>Goal finish in:</p>
-                            <p class="date-end">${dateEnd}</p>
-                        </div>-->
-
-        </div>
+        <div class="box"></div>
 
 
     </div>
 
-    <!-- <div class="windowsEdit">
-        <button id="close-btn">
-            <i class="fas fa-remove"></i>
-            <h3>id</h3>
-            <form>
-                <div class="frm">
-                    <label for="nome">Name</label>
-                    <input type="text" id="editName">
-                </div>
-                <div class="frm">
-                    <button id="btnUpdateGoal">Update</button>
-                </div>
-            </form>
-    </div>
-    <div id="box-bg-edit"></div> -->
+
     <div class="container">
         <div class="windowsEdit create-goal-edit hidden">
             <button id="close-btn">
                 <i class="fas fa-times-circle"></i>
             </button>
 
-            <h3>Edit</h3>
+            <h3 id="id-edit"></h3>
 
             <div class="edit-div-name">
                 <label for="text">Your goal:</label>
