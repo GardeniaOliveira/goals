@@ -40,6 +40,10 @@ h3 {
   font-size: 26px;
   text-align: center;
 }
+.error {
+  font-size: 18px;
+  color: var(--counter-color);
+}
 .container-create {
   max-width: 900px;
   width: 100%;
@@ -124,7 +128,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   max-width: 900px;
   width: 100%;
   display: flex;
-  padding: 20px 0;
+  padding: 20px;
   margin: 10px 0;
   flex-wrap: wrap;
   flex-direction: column;
@@ -139,13 +143,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 5px;
   color: white;
   text-transform: uppercase;
-  padding: 10px;
   align-items: center;
   justify-content: space-between;
   align-content: center;
 }
 
 #container-progress-bar {
+  width: 100%;
   overflow: hidden;
   position: relative;
   display: flex;
@@ -155,18 +159,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   align-content: center;
 }
 .progress-bar {
-  height: 70px;
+  height: 100%;
   position: absolute;
   background: var(--progress-bar-color);
   left: 0;
   top: 0;
+  border-radius: 5px 0 0 5px;
 }
 .name-progress-bar {
-  left: 10px;
+  padding-left: 10px;
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  z-index: 2;
 }
 
 #check-input {
@@ -193,6 +199,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   height: 70px;
   gap: 10px;
+  border-radius: 5px;
 }
 #undo-btn,
 #edit-btn,
@@ -318,6 +325,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .div-name,
   .create-goal button {
     width: 100%;
+  }
+  .container {
+    padding: 20px 0;
   }
   .div-time {
     width: 20%;

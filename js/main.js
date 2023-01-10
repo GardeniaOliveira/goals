@@ -12,17 +12,26 @@ const inputEditDateStart = document.querySelector('#edit-date-start');
 const inputEditDateEnd = document.querySelector('#edit-date-end');
 const btnUpdate = document.querySelector('#update-btn');
 const idEditGoal = document.querySelector('#id-edit');
+const error = document.querySelector('.error');
 let id = 0;
 
 btnCreate.addEventListener('click', () => {
-    let goal = {
-        id: createId(),
-        name: inputName.value,
-        times: inputTimes.value,
-        dateStart: inputDateStart.value,
-        dateEnd: inputDateEnd.value
+    if (inputName.value !== "" && inputTimes.value !== "" && inputDateStart.value !== "" && inputDateEnd.value !== "") {
+        error.innerText = "";
+        let goal = {
+            id: createId(),
+            name: inputName.value,
+            times: inputTimes.value,
+            dateStart: inputDateStart.value,
+            dateEnd: inputDateEnd.value
+        }
+
+        addGoal(goal)
+    } else {
+        error.innerText = "Please, all fields have to be filled!"
     }
-    addGoal(goal)
+
+
 })
 
 function createId() {
