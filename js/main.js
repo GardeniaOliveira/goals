@@ -30,7 +30,6 @@ function createId() {
     return id;
 }
 
-
 function addGoal(goal) {
     let boxGoal = structure(goal);
     divBox.appendChild(boxGoal);
@@ -45,14 +44,23 @@ function structure(goal) {
     let div = document.createElement('div');
     div.className = 'format-boxes';
 
+
+    let divContainerProgressBar = document.createElement('div');
+    divContainerProgressBar.id = 'container-progress-bar';
+
+    let progressBar = document.createElement('div');
+    progressBar.className = 'progress-bar';
+
     let p = document.createElement('p');
-    p.className = 'nameGoal';
+    p.id = 'nameGoal';
+    p.className = 'name-progress-bar';
     p.innerHTML = goal.name;
 
     let divCounter = document.createElement('div');
     divCounter.className = 'counter';
 
     let counterStart = document.createElement('p');
+    counterStart.className = 'counterStart';
     counterStart.innerHTML = 0;
 
     let bar = document.createElement('p');
@@ -65,6 +73,7 @@ function structure(goal) {
     let checkbox = document.createElement('input');
     checkbox.type = "checkbox";
     checkbox.id = "check-input";
+    checkbox.setAttribute('onchange', 'check(' + goal.id + ')');
 
     let divButtons = document.createElement('div');
     divButtons.className = "buttons-icons";
@@ -72,7 +81,7 @@ function structure(goal) {
     let btnUndo = document.createElement('button');
     btnUndo.id = 'undo-btn';
     btnUndo.innerHTML = '<i class="fas fa-undo-alt icon"></i>';
-    // btnUndo.setAttribute('onclick', 'undo('+goal.id+')');
+    btnUndo.setAttribute('onclick', 'undo(' + goal.id + ')');
 
     let btnEdit = document.createElement('button');
     btnEdit.id = 'edit-btn';
@@ -84,18 +93,29 @@ function structure(goal) {
     btnDelete.innerHTML = '<i class="fas fa-trash"></i>';
     btnDelete.setAttribute('onclick', 'remove(' + goal.id + ')');
 
+    let divCounterButtons = document.createElement('div');
+    divCounterButtons.className = 'divCounterButtons';
+
+
+    divContainerProgressBar.appendChild(progressBar);
+    divContainerProgressBar.appendChild(p);
+
     divCounter.appendChild(checkbox);
     divCounter.appendChild(counterStart);
     divCounter.appendChild(bar);
     divCounter.appendChild(counterEnd);
 
+
     divButtons.appendChild(btnUndo);
     divButtons.appendChild(btnEdit);
     divButtons.appendChild(btnDelete);
 
-    div.appendChild(p);
-    div.appendChild(divCounter);
-    div.appendChild(divButtons);
+    divCounterButtons.appendChild(divCounter);
+    divCounterButtons.appendChild(divButtons);
+
+
+    div.appendChild(divContainerProgressBar);
+    div.appendChild(divCounterButtons);
 
     let divDate = document.createElement('div');
     divDate.className = 'date';
@@ -103,20 +123,17 @@ function structure(goal) {
     let pLastTime = document.createElement('p');
     pLastTime.innerHTML = `Last time: ${new Date()}`
 
-    let pStart = document.createElement('p');
-    pStart.className = 'start';
-    // pStart.innerHTML = `Goal started in: ${goal.dateStart}`
-    pStart.innerHTML = goal.dateStart;
+    let dateStart = document.createElement('p');
+    dateStart.className = 'start';
+    dateStart.innerHTML = goal.dateStart;
 
-
-    let pEnd = document.createElement('p');
-    pEnd.className = 'end';
-    // pEnd.innerHTML = `Goal end in: ${goal.dateEnd}`
-    pEnd.innerHTML = goal.dateEnd;
+    let dateEnd = document.createElement('p');
+    dateEnd.className = 'end';
+    dateEnd.innerHTML = goal.dateEnd;
 
     divDate.appendChild(pLastTime);
-    divDate.appendChild(pStart);
-    divDate.appendChild(pEnd);
+    divDate.appendChild(dateStart);
+    divDate.appendChild(dateEnd);
 
     container.appendChild(div);
     container.appendChild(divDate);
@@ -125,11 +142,11 @@ function structure(goal) {
 
 }
 
-//open the window to edit
+//open the window to editCounterStart
 function edit(idGoal) {
     windowsEdit.classList.remove('hidden');
     let div = document.getElementById('' + idGoal + '');
-    let name = div.querySelector('p.nameGoal');
+    let name = div.querySelector('p#nameGoal');
     let times = div.querySelector('p.times');
     let start = div.querySelector('p.start');
     let end = div.querySelector('p.end');
@@ -167,6 +184,36 @@ btnUpdate.addEventListener('click', () => {
 
     windowsEdit.classList.add('hidden');
 })
+
+
+function check(idGoal) {
+    let div = document.getElementById('' + idGoal + '');
+    let checkbox = div.querySelector('#check-input')
+    let counterStart = div.querySelector('.counterStart');
+    let counterEnd = div.querySelector('.times');
+    let progressBar = div.querySelector('.progress-bar');
+    let counter = Number(counterStart.innerText);
+    if (checkbox.checked && counter < counterEnd.innerHTML) {
+        counter = counter + 1;
+        counterStart.innerText = counter;
+        progressBar.style.width = (counter / counterEnd.innerHTML) * 100 + "%";
+    }
+
+}
+
+function undo(idGoal) {
+    let div = document.getElementById('' + idGoal + '');
+    let counterStart = div.querySelector('.counterStart');
+    let counterEnd = div.querySelector('.times');
+    let progressBar = div.querySelector('.progress-bar');
+    let counter = Number(counterStart.innerText);
+    if (counter > 0) {
+        counter = counter - 1;
+        counterStart.innerText = counter;
+        progressBar.style.width = (counter / counterEnd.innerHTML) * 100 + "%";
+    }
+}
+
 
 function remove(idGoal) {
     let confirm = window.confirm('Are you sure you want to delete this?');

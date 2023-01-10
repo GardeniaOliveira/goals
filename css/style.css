@@ -9,10 +9,8 @@
   --counter-color: #ffa91f;
   --btn-color: #ffa91f;
   --hover-btn-color: #ff910d;
-  /* --bg-color: #1e293b; */
   --bg-color: #040415;
   --bg-box-buttons-color: #686869;
-  /* --bg-input-color: #686869; */
   --bg-input-color: #686869;
   --progress-bar-color: #64487a;
   --box-bg-edit-color: #353536;
@@ -42,9 +40,11 @@ h3 {
   font-size: 26px;
   text-align: center;
 }
-.container {
+.container-create {
+  max-width: 900px;
+  width: 100%;
   display: flex;
-  padding: 20px;
+  padding: 20px 10px;
   margin: 10px;
   flex-wrap: wrap;
   flex-direction: column;
@@ -84,21 +84,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   text-transform: uppercase;
   padding: 10px;
 }
-.format-boxes {
-  display: flex;
-  width: 100%;
-  height: 70px;
-  background: var(--bg-input-color);
-  border: 1px solid transparent;
-  border-radius: 5px;
-  color: white;
-  text-transform: uppercase;
-  padding: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  align-content: center;
-}
+
 .div-name {
   width: 350px;
 }
@@ -131,36 +117,53 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .box {
   width: 100%;
   display: flex;
-  padding: 10px 0 5px 0;
-  align-content: center;
-  align-items: flex-start;
-  justify-content: center;
   flex-wrap: wrap;
+  padding: 10px 0 5px 0;
 }
-.container-progress-bar,
-.counter {
-  position: relative;
+.container {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  padding: 20px 0;
+  margin: 10px 0;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 }
-.container-progress-bar {
-  width: 500px;
+.format-boxes {
+  display: flex;
+  width: 100%;
+  height: 70px;
+  background: var(--bg-input-color);
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: white;
+  text-transform: uppercase;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  align-content: center;
+}
+
+#container-progress-bar {
   overflow: hidden;
   position: relative;
-  border-radius: 5px 0 0 5px;
+  display: flex;
+  height: 70px;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
 }
 .progress-bar {
-  height: 60px;
+  height: 70px;
+  position: absolute;
   background: var(--progress-bar-color);
   left: 0;
-  position: absolute;
   top: 0;
 }
-/* .name-progress-bar {
-  position: absolute;
-  top: 18px;
+.name-progress-bar {
   left: 10px;
   font-weight: 600;
-} */
-.nameGoal {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -183,29 +186,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding: 10px;
   background: var(--counter-color);
   color: black;
-  border-radius: 0;
-  margin-left: 100px;
+  position: relative;
 }
-.date {
-  display: flex;
-  gap: 10px;
-  font-size: 13px;
-  color: white;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding-top: 5px;
-}
-.date div {
-  display: flex;
-  padding-top: 14px;
-  gap: 5px;
-}
-
 .buttons-icons {
-  width: 20%;
   background: var(--bg-box-buttons-color);
   display: flex;
   height: 70px;
-  justify-content: space-around;
+  gap: 10px;
 }
 #undo-btn,
 #edit-btn,
@@ -224,22 +211,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: var(--hover-btn-color);
   font-size: 22px;
 }
+.divCounterButtons {
+  width: 30%;
+  display: flex;
+  justify-content: space-around;
+}
+.date {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding-top: 5px;
+}
+.date div {
+  display: flex;
+  padding-top: 14px;
+  gap: 5px;
+}
 .hidden {
   visibility: hidden;
 }
 /* Edit */
 
-/* #box-bg-edit {
-  position: fixed;
-  top: 0;
-  background-color: #000;
-  bottom: 0;
-  left: 0;
-  opacity: 0.9;
-  z-index: 100;
-  right: 0;
-  display: none;
-} */
 .create-goal-edit {
   max-width: 400px;
   width: 100%;
@@ -340,14 +334,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .date {
     display: block;
   }
-  .container-progress-bar {
-    width: 50%;
-  }
   .counter {
-    width: 20%;
-    margin-left: 10vw;
+    width: 70px;
   }
-  .box .buttons-icons {
-    width: 30%;
+  .divCounterButtons {
+    width: auto;
   }
 }
