@@ -14,6 +14,16 @@ const btnUpdate = document.querySelector('#update-btn');
 const idEditGoal = document.querySelector('#id-edit');
 const error = document.querySelector('.error');
 let id = 0;
+let today = new Date();
+let newDate = today.toUTCString();
+let dataBase = [];
+
+// inputDateEnd.addEventListener('change', () => {
+//     inputDateEnd.innerHTML = inputDateStart.value;
+// })
+function minDateEnd() {
+    inputDateEnd.value >= inputDateStart.value
+}
 
 btnCreate.addEventListener('click', () => {
     if (inputName.value !== "" && inputTimes.value !== "" && inputDateStart.value !== "" && inputDateEnd.value !== "") {
@@ -25,12 +35,17 @@ btnCreate.addEventListener('click', () => {
             dateStart: inputDateStart.value,
             dateEnd: inputDateEnd.value
         }
-
+        // create 
+        dataBase.push(goal);
+        localStorage.setItem('db', JSON.stringify(dataBase))
+        //read
+        console.log(JSON.parse(localStorage.getItem('db')));
         addGoal(goal)
+        clearInputs()
+
     } else {
         error.innerText = "Please, all fields have to be filled!"
     }
-
 
 })
 
@@ -130,15 +145,15 @@ function structure(goal) {
     divDate.className = 'date';
 
     let pLastTime = document.createElement('p');
-    pLastTime.innerHTML = `Last time: ${new Date()}`
+    pLastTime.innerHTML = `Last time: ${newDate}`;
 
     let dateStart = document.createElement('p');
     dateStart.className = 'start';
-    dateStart.innerHTML = goal.dateStart;
+    dateStart.innerHTML = `Goal start in:  ${goal.dateStart}`;
 
     let dateEnd = document.createElement('p');
     dateEnd.className = 'end';
-    dateEnd.innerHTML = goal.dateEnd;
+    dateEnd.innerHTML = `Goal end in :  ${goal.dateEnd}`;
 
     divDate.appendChild(pLastTime);
     divDate.appendChild(dateStart);
@@ -164,8 +179,8 @@ function edit(idGoal) {
         idEditGoal.innerHTML = (`Edit goal ${idGoal}`);
         inputEditName.value = name.innerText;
         inputEditTimes.value = times.innerText;
-        inputEditDateStart.value = start.innerText;
-        inputEditDateEnd.value = end.innerText;
+        inputEditDateStart.value = start.innerText.slice(-10);
+        inputEditDateEnd.value = end.innerText.slice(-10);
 
         console.log(inputEditDateStart.value);
     }
@@ -183,6 +198,8 @@ btnUpdate.addEventListener('click', () => {
         dateStart: inputEditDateStart.value,
         dateEnd: inputEditDateEnd.value,
     }
+    dataBase.push(goal);
+    localStorage.setItem('db', JSON.stringify(dataBase));
 
     let currentGoal = document.getElementById('' + idGoal.trim() + '');
     console.log(currentGoal);
@@ -230,6 +247,15 @@ function remove(idGoal) {
         let div = document.getElementById('' + idGoal + '');
         if (div) {
             divBox.removeChild(div);
+            localStorage.removeItem('div');
         }
+
     }
+}
+
+function clearInputs() {
+    inputName.value = '';
+    inputTimes.value = '';
+    inputDateStart.value = '';
+    inputDateEnd.value = '';
 }

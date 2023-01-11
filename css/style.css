@@ -146,6 +146,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   align-items: center;
   justify-content: space-between;
   align-content: center;
+  padding-right: 20px;
 }
 
 #container-progress-bar {
@@ -222,6 +223,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 30%;
   display: flex;
   justify-content: space-around;
+  gap: 5px;
 }
 .date {
   display: flex;
@@ -328,6 +330,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
   .container {
     padding: 20px 0;
+    align-items: flex-start;
   }
   .div-time {
     width: 20%;
@@ -346,6 +349,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
   .counter {
     width: 70px;
+  }
+  .format-boxes {
+    padding-right: 5px;
   }
   .divCounterButtons {
     width: auto;
