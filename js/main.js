@@ -22,6 +22,9 @@ inputDateEnd.addEventListener('click', () => {
     debugger;
     inputDateEnd.min = inputDateStart.value;
 });
+inputTimes.addEventListener('input', () => {
+    inputTimes.value <= 0 ? error.innerHTML = 'Please enter a number greater than 0' : error.innerHTML = '';
+});
 
 btnCreate.addEventListener('click', () => {
     if (inputName.value !== "" && inputTimes.value !== "" && inputDateStart.value !== "" && inputDateEnd.value !== "") {
