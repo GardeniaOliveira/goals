@@ -333,15 +333,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: flex-start;
   }
   .div-time {
-    width: 20%;
-    margin: 20px 0;
+    width: 17%;
   }
   .div-start {
-    width: 35%;
-    margin: 20px 0;
+    width: 40%;
   }
   .div-end {
     width: 40%;
+  }
+  .align {
     margin: 20px 0;
   }
   .date {

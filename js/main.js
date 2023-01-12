@@ -18,12 +18,10 @@ let today = new Date();
 let newDate = today.toUTCString();
 let dataBase = [];
 
-// inputDateEnd.addEventListener('change', () => {
-//     inputDateEnd.innerHTML = inputDateStart.value;
-// })
-function minDateEnd() {
-    inputDateEnd.value >= inputDateStart.value
-}
+inputDateEnd.addEventListener('click', () => {
+    debugger;
+    inputDateEnd.min = inputDateStart.value;
+});
 
 btnCreate.addEventListener('click', () => {
     if (inputName.value !== "" && inputTimes.value !== "" && inputDateStart.value !== "" && inputDateEnd.value !== "") {
@@ -145,7 +143,8 @@ function structure(goal) {
     divDate.className = 'date';
 
     let pLastTime = document.createElement('p');
-    pLastTime.innerHTML = `Last time: ${newDate}`;
+    pLastTime.id = 'lastTime';
+
 
     let dateStart = document.createElement('p');
     dateStart.className = 'start';
@@ -218,11 +217,13 @@ function check(idGoal) {
     let counterStart = div.querySelector('.counterStart');
     let counterEnd = div.querySelector('.times');
     let progressBar = div.querySelector('.progress-bar');
+    let pLastTime = div.querySelector('#lastTime');
     let counter = Number(counterStart.innerText);
     if (checkbox.checked && counter < counterEnd.innerHTML) {
         counter = counter + 1;
         counterStart.innerText = counter;
         progressBar.style.width = (counter / counterEnd.innerHTML) * 100 + "%";
+        pLastTime.innerHTML = `Last time: ${newDate}`;
     }
 
 }
