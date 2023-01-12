@@ -16,7 +16,12 @@ const error = document.querySelector('.error');
 let id = 0;
 let today = new Date();
 let newDate = today.toUTCString();
-let dataBase = [];
+let dataBase = getInLocalStorage();
+
+
+dataBase.forEach(element => {
+    addGoal(element)
+});
 
 inputDateEnd.addEventListener('click', () => {
     debugger;
@@ -38,9 +43,7 @@ btnCreate.addEventListener('click', () => {
         }
         // create 
         dataBase.push(goal);
-        localStorage.setItem('db', JSON.stringify(dataBase))
-        //read
-        console.log(JSON.parse(localStorage.getItem('db')));
+        saveInLocalStorage();
         addGoal(goal)
         clearInputs()
 
@@ -183,8 +186,6 @@ function edit(idGoal) {
         inputEditTimes.value = times.innerText;
         inputEditDateStart.value = start.innerText.slice(-10);
         inputEditDateEnd.value = end.innerText.slice(-10);
-
-        console.log(inputEditDateStart.value);
     }
 }
 btnClose.addEventListener('click', () => {
@@ -194,14 +195,14 @@ btnUpdate.addEventListener('click', () => {
     let idGoal = idEditGoal.innerHTML.replace('Edit goal', '');
     // create a new object with the goal updated;
     let goal = {
-        id: idGoal.trim(),
+        id: Number(idGoal.trim()),
         name: inputEditName.value,
         times: inputEditTimes.value,
         dateStart: inputEditDateStart.value,
         dateEnd: inputEditDateEnd.value,
     }
-    dataBase.push(goal);
-    localStorage.setItem('db', JSON.stringify(dataBase));
+    updateDatabase(goal)
+    saveInLocalStorage();
 
     let currentGoal = document.getElementById('' + idGoal.trim() + '');
     console.log(currentGoal);
@@ -212,7 +213,6 @@ btnUpdate.addEventListener('click', () => {
 
     windowsEdit.classList.add('hidden');
 })
-
 
 function check(idGoal) {
     let div = document.getElementById('' + idGoal + '');
@@ -244,17 +244,20 @@ function undo(idGoal) {
     }
 }
 
-
 function remove(idGoal) {
+    console.log(idGoal);
     let confirm = window.confirm('Are you sure you want to delete this?');
     if (confirm) {
         let div = document.getElementById('' + idGoal + '');
         if (div) {
             divBox.removeChild(div);
-            localStorage.removeItem('div');
+            removeItemDatabases(Number(idGoal));
+            saveInLocalStorage()
         }
 
     }
+    // saveInLocalStorage()
+
 }
 
 function clearInputs() {
@@ -263,3 +266,36 @@ function clearInputs() {
     inputDateStart.value = '';
     inputDateEnd.value = '';
 }
+
+function getInLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('db'));
+    if (data) {
+        return data
+    } else {
+        return [];
+    }
+
+
+}
+
+function saveInLocalStorage() {
+    localStorage.setItem('db', JSON.stringify(dataBase))
+}
+
+//se encontrar um com o mesmo id, substitui. Se não, deixa do jeito que tava; 
+function updateDatabase(goal) {
+
+    dataBase = dataBase.map(element => {
+        if (goal.id === element.id) {
+            return goal;
+        }
+        return element;
+    });
+}
+
+//quem for diferente vai passar e o igual será cortado; 
+function removeItemDatabases(idGoal) {
+    dataBase = dataBase.filter(item => item.id !== idGoal);
+}
+
+
