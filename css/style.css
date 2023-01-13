@@ -14,6 +14,14 @@
   --bg-input-color: #686869;
   --progress-bar-color: #64487a;
   --box-bg-edit-color: #353536;
+  /* --counter-color: #42032c;
+  --btn-color: #d36b00;
+  --hover-btn-color: #ff910d;
+  --bg-color: #040415;
+  --bg-box-buttons-color: #42032c;
+  --bg-input-color: #f1efdc;
+  --progress-bar-color: #42032c;
+  --box-bg-edit-color: #42032c; */
 }
 body {
   font-family: "Raleway", sans-serif;

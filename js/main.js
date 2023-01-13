@@ -19,6 +19,7 @@ let newDate = today.toUTCString();
 let dataBase = getInLocalStorage();
 
 
+
 dataBase.forEach(element => {
     addGoal(element)
 });
@@ -39,7 +40,9 @@ btnCreate.addEventListener('click', () => {
             name: inputName.value,
             times: inputTimes.value,
             dateStart: inputDateStart.value,
-            dateEnd: inputDateEnd.value
+            dateEnd: inputDateEnd.value,
+            counterStart: 0,
+
         }
         // create 
         dataBase.push(goal);
@@ -78,6 +81,7 @@ function structure(goal) {
 
     let progressBar = document.createElement('div');
     progressBar.className = 'progress-bar';
+    progressBar.style.width = (goal.counterStart / goal.times) * 100 + "%";
 
     let p = document.createElement('p');
     p.id = 'nameGoal';
@@ -89,7 +93,7 @@ function structure(goal) {
 
     let counterStart = document.createElement('p');
     counterStart.className = 'counterStart';
-    counterStart.innerHTML = 0;
+    counterStart.innerHTML = goal.counterStart;
 
     let bar = document.createElement('p');
     bar.innerHTML = "/";
@@ -171,6 +175,8 @@ function structure(goal) {
 
 }
 
+
+
 //open the window to editCounterStart
 function edit(idGoal) {
     windowsEdit.classList.remove('hidden');
@@ -227,6 +233,8 @@ function check(idGoal) {
         counterStart.innerText = counter;
         progressBar.style.width = (counter / counterEnd.innerHTML) * 100 + "%";
         pLastTime.innerHTML = `Last time: ${newDate}`;
+        incrementCounter(idGoal);
+        saveInLocalStorage();
     }
 
 }
@@ -241,7 +249,11 @@ function undo(idGoal) {
         counter = counter - 1;
         counterStart.innerText = counter;
         progressBar.style.width = (counter / counterEnd.innerHTML) * 100 + "%";
+
+        decrementCounter(idGoal);
+        saveInLocalStorage();
     }
+
 }
 
 function remove(idGoal) {
@@ -282,7 +294,7 @@ function saveInLocalStorage() {
     localStorage.setItem('db', JSON.stringify(dataBase))
 }
 
-//se encontrar um com o mesmo id, substitui. Se não, deixa do jeito que tava; 
+//if find the same id, replace for the new information. 
 function updateDatabase(goal) {
 
     dataBase = dataBase.map(element => {
@@ -293,9 +305,26 @@ function updateDatabase(goal) {
     });
 }
 
-//quem for diferente vai passar e o igual será cortado; 
+// if find the same id, will be deleted. 
 function removeItemDatabases(idGoal) {
     dataBase = dataBase.filter(item => item.id !== idGoal);
 }
 
+// if find the same id, will be incremented;
+function incrementCounter(idGoal) {
+    dataBase = dataBase.map(element => {
+        if (idGoal === element.id) {
+            element.counterStart = element.counterStart + 1;
+        }
+        return element;
+    });
+}
 
+function decrementCounter(idGoal) {
+    dataBase = dataBase.map(element => {
+        if (idGoal === element.id) {
+            element.counterStart = element.counterStart - 1;
+        }
+        return element;
+    });
+}
