@@ -207,6 +207,7 @@ btnUpdate.addEventListener('click', () => {
         times: inputEditTimes.value,
         dateStart: inputEditDateStart.value,
         dateEnd: inputEditDateEnd.value,
+        counterStart: 0,
     }
     updateDatabase(goal)
     saveInLocalStorage();
