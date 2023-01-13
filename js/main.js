@@ -28,6 +28,9 @@ inputDateEnd.addEventListener('click', () => {
     debugger;
     inputDateEnd.min = inputDateStart.value;
 });
+inputEditDateEnd.addEventListener('click', () => {
+    inputEditDateEnd.min = inputEditDateStart.value;
+});
 inputTimes.addEventListener('input', () => {
     inputTimes.value <= 0 ? error.innerHTML = 'Please enter a number greater than 0' : error.innerHTML = '';
 });
@@ -44,7 +47,7 @@ btnCreate.addEventListener('click', () => {
             counterStart: 0,
 
         }
-        // create 
+        // create db
         dataBase.push(goal);
         saveInLocalStorage();
         addGoal(goal)
@@ -174,8 +177,6 @@ function structure(goal) {
     return container;
 
 }
-
-
 
 //open the window to editCounterStart
 function edit(idGoal) {
